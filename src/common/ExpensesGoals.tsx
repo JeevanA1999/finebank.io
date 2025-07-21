@@ -13,6 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import HomeIcon from '@mui/icons-material/Home';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
@@ -52,14 +53,14 @@ const initialGoals = {
   Shopping: 250,
   Others: 250,
 };
+
 export default function ExpensesGoals() {
   const [goals, setGoals] = useState(initialGoals);
   const [open, setOpen] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newValue, setNewValue] = useState('');
-  const theme = useTheme();
-
-  const isTablet = useMediaQuery('(min-width:900px) and (max-width:1199.95px)');
+  const [newCategory, setNewCategory] = useState('');
 
   const handleOpen = (category) => {
     setSelectedCategory(category);
@@ -69,11 +70,14 @@ export default function ExpensesGoals() {
 
   const handleClose = () => {
     setOpen(false);
+    setOpenAdd(false);
     setSelectedCategory('');
     setNewValue('');
+    setNewCategory('');
   };
 
   const handleSave = () => {
+    if (!selectedCategory || isNaN(newValue)) return;
     setGoals((prev) => ({
       ...prev,
       [selectedCategory]: parseFloat(newValue),
@@ -81,14 +85,33 @@ export default function ExpensesGoals() {
     handleClose();
   };
 
+  const handleSaveAdd = () => {
+    if (!newCategory || isNaN(newValue)) return;
+    setGoals((prev) => ({
+      ...prev,
+      [newCategory]: parseFloat(newValue),
+    }));
+    handleClose();
+  };
+
   return (
     <Grid item xs={12}>
       <Box>
-        <Typography variant="h6" fontWeight={600} color="#878787" mb={2}>
-          Goals
-        </Typography>
+        <Box display="flex" justifyContent="space-between" mt={2}>
+          <Typography variant="h6" fontWeight={600} color="#878787" mb={2}>
+            Goals
+          </Typography>
+          <Button
+            sx={{ width: '150px', height: '48px', borderRadius: '6px' }}
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => setOpenAdd(true)}
+          >
+            Add Goals
+          </Button>
+        </Box>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} mt={2}>
           {Object.keys(goals).map((category) => (
             <Grid item xs={12} sm={6} md={4} key={category}>
               <Paper
@@ -115,7 +138,9 @@ export default function ExpensesGoals() {
                     flexShrink: 0,
                   }}
                 >
-                  {categoryIcons[category]}
+                  {categoryIcons[category] || (
+                    <AppsIcon sx={{ color: '#525256' }} />
+                  )}
                 </Box>
 
                 <Box
@@ -153,7 +178,50 @@ export default function ExpensesGoals() {
           ))}
         </Grid>
 
-        {/* Dialog for Goal Adjustment */}
+        {/* Dialog: Add New Goal */}
+        <Dialog
+          open={openAdd}
+          onClose={handleClose}
+          PaperProps={{
+            sx: {
+              p: 3,
+              borderRadius: '8px',
+              minWidth: 300,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            },
+          }}
+        >
+          <DialogTitle>Add New Goal</DialogTitle>
+          <DialogContent sx={{ width: '100%', px: 0 }}>
+            <TextField
+              label="Category"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              label="Target Amount"
+              type="number"
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions sx={{ justifyContent: 'center', mt: 2 }}>
+            <Button
+              variant="contained"
+              sx={{ width: 100, height: 40, borderRadius: '6px' }}
+              onClick={handleSaveAdd}
+            >
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Dialog: Adjust Existing Goal */}
         <Dialog
           open={open}
           onClose={handleClose}
@@ -168,34 +236,17 @@ export default function ExpensesGoals() {
             },
           }}
         >
-          <Typography
-            variant="h6"
-            fontWeight={500}
-            fontSize={'16px'}
-            sx={{ mb: 2 }}
-          >
-            Target Amount
-          </Typography>
-
-          <DialogContent
-            sx={{
-              width: '100%',
-              px: 0,
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
+          <DialogTitle>Adjust Goal - {selectedCategory}</DialogTitle>
+          <DialogContent sx={{ width: '100%', px: 0 }}>
             <TextField
+              label="Target Amount"
               type="number"
               value={newValue}
               onChange={(e) => setNewValue(e.target.value)}
               fullWidth
-              autoFocus
-              sx={{ maxWidth: 300 }}
             />
           </DialogContent>
-
-          <Box mt={2}>
+          <DialogActions sx={{ justifyContent: 'center', mt: 2 }}>
             <Button
               variant="contained"
               sx={{ width: 100, height: 40, borderRadius: '6px' }}
@@ -203,7 +254,7 @@ export default function ExpensesGoals() {
             >
               Save
             </Button>
-          </Box>
+          </DialogActions>
         </Dialog>
       </Box>
     </Grid>

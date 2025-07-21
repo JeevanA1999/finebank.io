@@ -3,6 +3,8 @@ import {
   Container,
   Typography,
   Button,
+  Breadcrumbs,
+  Link,
   Grid,
   useMediaQuery,
   Table,
@@ -19,6 +21,7 @@ import { useParams } from 'react-router-dom';
 import { cards } from '../common/AccountCard';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link as RouterLink } from 'react-router-dom';
 
 const transactions = [
   {
@@ -109,16 +112,29 @@ export default function BalanceDetails() {
       <Container
         maxWidth="xl"
         sx={{
-          py: 3,
+          py: 1,
           px: 1.5,
           maxWidth: { xs: '380px', sm: '100%' },
           overflow: 'hidden',
         }}
       >
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" component={RouterLink} to="/">
+            Dashboard
+          </Link>
+          <Link
+            underline="hover"
+            color="inherit"
+            component={RouterLink}
+            to="/balances"
+          >
+            Balances
+          </Link>
+          <Typography variant="h6" fontWeight={600} color="#878787">
+            Account Details
+          </Typography>
+        </Breadcrumbs>
         {/* Account Details */}
-        <Typography fontWeight={600} color="#878787" mb={1}>
-          Account Details
-        </Typography>
 
         <Box
           gap={2}
@@ -209,6 +225,7 @@ export default function BalanceDetails() {
           </Typography>
 
           <Box
+            boxShadow={12}
             sx={{
               borderRadius: 1,
               bgcolor: 'white',

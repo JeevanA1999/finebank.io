@@ -12,6 +12,8 @@ import {
   Avatar,
   useTheme,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Breadcrumbs, Link } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 
 const generatePastDate = (
@@ -75,16 +77,19 @@ export default function Bills() {
       </Helmet>
       <Container
         maxWidth="xl"
-        sx={{ py: 3, px: 1.5, maxWidth: { xs: '380px', sm: '100%' } }}
+        sx={{ py: 1, px: 1.5, maxWidth: { xs: '380px', sm: '100%' } }}
       >
-        <Box mb={1}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" component={RouterLink} to="/">
+            Dashboard
+          </Link>
           <Typography variant="h6" fontWeight={600} color="#878787">
             Bills
           </Typography>
-        </Box>
+        </Breadcrumbs>
 
         {/* <Grid container spacing={2} mt={2}> */}
-        <Grid item xs={12} borderRadius={1}>
+        <Grid item xs={12} borderRadius={1} mt={2}>
           <Box
             overflow="auto"
             bgcolor="white"

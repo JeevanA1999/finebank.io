@@ -281,7 +281,9 @@ export const cards = [
 ];
 
 export default function AccountCard() {
-  const isTablet = useMediaQuery('(max-width:1023.95px)');
+  // const isTablet = useMediaQuery('(max-width:1023.95px)');
+  const isTablet = useMediaQuery('(min-width:900px) and (max-width:1199.95px)');
+
   const [present, setPresent] = useState(0);
   const card = cards[present];
 
@@ -295,7 +297,7 @@ export default function AccountCard() {
 
   return (
     <Box
-      width={isTablet ? '320px' : '100%'}
+      width={'100%'}
       height="232px"
       bgcolor="white"
       borderRadius="8px"
@@ -314,7 +316,7 @@ export default function AccountCard() {
           component={RouterLink}
           to="/balances"
           underline="none"
-          sx={{ fontSize: 14, lineHeight: '20px', color: '#525256' }}
+          sx={{ fontSize: 12, lineHeight: '20px', color: '#525256' }}
         >
           All Accounts
         </Link>
@@ -406,7 +408,7 @@ export default function AccountCard() {
 
         {/* Dots */}
         <Box display="flex" gap={1}>
-          {cards.map((_, i) => (
+          {(isTablet ? Array(3) : cards).map((_, i) => (
             <Box
               key={i}
               width={8}

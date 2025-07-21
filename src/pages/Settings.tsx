@@ -5,10 +5,13 @@ import {
   Container,
   TextField,
   Avatar,
+  Breadcrumbs,
+  Link,
 } from '@mui/material';
 import { useState, useRef } from 'react';
 import uploadprofile from '../assets/uploadprofile.svg';
 import { Helmet } from 'react-helmet-async';
+import { Link as RouterLink } from 'react-router-dom';
 export default function Settings() {
   const [page, setPage] = useState('Account');
   const [isEditing, setIsEditing] = useState(false);
@@ -61,8 +64,18 @@ export default function Settings() {
       <Helmet>
         <title>FINEbank.IO || Settings</title>
       </Helmet>
-      <Container maxWidth="xl" sx={{ py: 3, px: 1.5 }}>
+      <Container maxWidth="xl" sx={{ py: 1, px: 1.5 }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" component={RouterLink} to="/">
+            Dashboard
+          </Link>
+
+          <Typography variant="h6" fontWeight={600} color="#878787">
+            Settings
+          </Typography>
+        </Breadcrumbs>
         <Box
+          mt={1}
           bgcolor="white"
           width="100%"
           // maxHeight="750px"

@@ -117,7 +117,7 @@ export default function RecentTransactions() {
           component={RouterLink}
           to="/transactions"
           underline="none"
-          fontSize="14px"
+          fontSize="12px"
           color="text.secondary"
         >
           View All

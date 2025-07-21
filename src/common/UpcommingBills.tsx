@@ -45,7 +45,8 @@ export default function UpcommingBills() {
 
   return (
     <Box
-      width={isTablet ? '320px' : '100%'}
+      // width={isTablet ? '320px' : '100%'}
+      width="100%"
       height="232px"
       bgcolor="white"
       borderRadius="8px"
@@ -117,7 +118,8 @@ export default function UpcommingBills() {
                 <Typography
                   color="#525256"
                   fontWeight={700}
-                  fontSize={16}
+                  // fontSize={16}
+                  sx={{ fontSize: isTablet ? 12 : 16 }}
                   lineHeight="24px"
                 >
                   {bill.type}
@@ -125,8 +127,8 @@ export default function UpcommingBills() {
                 <Typography
                   color="#9F9F9F"
                   fontWeight={400}
-                  fontSize={12}
                   lineHeight="16px"
+                  sx={{ fontSize: isTablet ? 8 : 12 }}
                 >
                   Last Charge - {bill.lastCharge}
                 </Typography>

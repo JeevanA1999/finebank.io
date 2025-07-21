@@ -9,6 +9,8 @@ import InputDialog from './InputDialog';
 
 const GaugeChart = ({ height }) => {
   const isTablet = useMediaQuery('(min-width:900px) and (max-width:1199.95px)');
+  const chartHeight = isTablet ? 108 : 128;
+  const chartWidth = isTablet ? 122 : 144;
   const date = new Date();
   const formatted = date.toLocaleDateString('en-US', {
     month: 'long',
@@ -41,7 +43,8 @@ const GaugeChart = ({ height }) => {
 
   return (
     <Box
-      width={isTablet ? '320px' : '100%'}
+      // width={isTablet ? '320px' : '100%'}
+      width="100%"
       height={height}
       bgcolor="white"
       borderRadius="8px"
@@ -124,8 +127,8 @@ const GaugeChart = ({ height }) => {
             </Box>
           </Box>
 
-          <Box width={144} height={128}>
-            <PieChart width={144} height={128}>
+          <Box height={chartHeight} width={chartWidth}>
+            <PieChart width={chartWidth} height={chartHeight}>
               <Pie
                 data={data}
                 innerRadius={35}

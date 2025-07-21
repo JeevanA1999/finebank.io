@@ -5,9 +5,12 @@ import {
   Grid,
   Typography,
   Divider,
+  Link,
   Paper,
+  useMediaQuery,
+  Breadcrumbs,
 } from '@mui/material';
-
+import { Link as RouterLink } from 'react-router-dom';
 import DownArrow from '../assets/Down arrow.svg';
 import UpArrow from '../assets/Up arrow.svg';
 import { Helmet } from 'react-helmet-async';
@@ -120,25 +123,30 @@ const monthlyData = [
 ];
 
 export default function Expenses() {
+  const isSmall = useMediaQuery('(min-width:768px) and (max-width:1270px)');
+
   return (
     <>
       <Helmet>
         <title>FINEbank.IO || Expenses</title>
       </Helmet>
-      <Container maxWidth="xl" sx={{ py: 3, px: 1.5 }}>
-        <Typography variant="h6" fontWeight={600} color="#878787" mb={1}>
-          Expenses Comparison
-        </Typography>
+      <Container maxWidth="xl" sx={{ py: 1, px: 1.5 }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" component={RouterLink} to="/">
+            Dashboard
+          </Link>
+          <Typography variant="h6" fontWeight={600} color="#878787">
+            Expenses Comparison
+          </Typography>
+        </Breadcrumbs>
 
-        <Box display="flex" gap={2} flexDirection="column">
+        <Box display="flex" gap={2} flexDirection="column" mt={2}>
           <Box width="100%" mb={2} boxShadow={12}>
             <ComparisonChart title="Monthly Comparison" data={monthlyData} />
           </Box>
-
           <Typography variant="h6" fontWeight={600} color="#878787" mb={1}>
             Expenses Breakdown
           </Typography>
-
           <Grid container spacing={2}>
             {expenseBreakDown.map((item, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
@@ -202,19 +210,23 @@ export default function Expenses() {
                           />
                         </Avatar>
                       </Box>
-                      <Typography
-                        fontSize="12px"
-                        variant="caption"
-                        color="#878787"
-                        noWrap
-                        sx={{
-                          maxWidth: '100px',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                        }}
-                      >
-                        Compare to last month
-                      </Typography>
+                      {isSmall ? (
+                        ''
+                      ) : (
+                        <Typography
+                          fontSize="12px"
+                          variant="caption"
+                          color="#878787"
+                          noWrap
+                          sx={{
+                            maxWidth: '100px',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          Compare to last month
+                        </Typography>
+                      )}
                     </Box>
                   </Box>
 

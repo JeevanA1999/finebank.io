@@ -15,9 +15,12 @@ import {
   Avatar,
   useTheme,
   useMediaQuery,
+  Breadcrumbs,
+  Link,
   TableSortLabel,
 } from '@mui/material';
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import HomeIcon from '@mui/icons-material/Home';
@@ -159,15 +162,18 @@ export default function Transactions() {
       </Helmet>
       <Container
         maxWidth="xl"
-        sx={{ py: 3, px: 1.5, maxWidth: { xs: '380px', sm: '100%' } }}
+        sx={{ py: 1, px: 1.5, maxWidth: { xs: '380px', sm: '100%' } }}
       >
-        <Box mb={1}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" component={RouterLink} to="/">
+            Dashboard
+          </Link>
           <Typography variant="h6" fontWeight={600} color="#878787">
             Transactions
           </Typography>
-        </Box>
+        </Breadcrumbs>
 
-        <Grid container spacing={2} mt={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Box overflow="auto">
               <Tabs

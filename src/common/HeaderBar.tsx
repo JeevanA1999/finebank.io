@@ -169,11 +169,9 @@ export default function HeaderBar({
   onToggleSidebar?: () => void;
 }) {
   const theme = useTheme();
-
-  // ✅ Treat 1024px and above as desktop
-  const isBelow1024 = useMediaQuery('(max-width:1019.95px)');
-  const isMobile = useMediaQuery('(max-width:599.95px)');
-  const isTablet = useMediaQuery('(min-width:600px) and (max-width:1019.95px)');
+  const isBelow1024 = useMediaQuery('(max-width:1023.95px)');
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -207,7 +205,7 @@ export default function HeaderBar({
         <Typography fontWeight={700} fontSize="24px">
           {!showMobileSearch ? 'John David' : ''}
         </Typography>
-        {!isTablet && !isMobile && (
+        {!isTablet && (
           <Box display="flex" alignItems="center" color="#9F9F9F">
             <Typography fontSize="24px" px={1}>
               »
@@ -226,7 +224,7 @@ export default function HeaderBar({
         justifyContent="space-between"
         gap={2}
         sx={{
-          width: isTablet || isMobile ? 'auto' : 416,
+          width: isTablet ? 'auto' : 416,
           flexDirection: isMobile ? 'row-reverse' : 'row',
         }}
       >
