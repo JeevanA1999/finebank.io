@@ -25,7 +25,7 @@ Finebank.io is a **responsive**, **feature-rich** banking dashboard built using 
 
 ### 🏠 Dashboard Overview
 
-![Dashboard Screenshot](images/dashboard.png)
+![Dashboard Screenshot](public/images/dashboard.png)
 
 ---
 
