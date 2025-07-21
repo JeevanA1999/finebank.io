@@ -134,10 +134,4 @@ Feel free to ⭐ the repo, fork it, or contribute improvements.
 
 ---
 
-Let me know if you'd like help with:
-
-- Adding CI/CD badges
-- Writing a `LICENSE`
-- Generating fake preview screenshots
-- Adding a "Live Demo" section with deployment instructions (e.g. on Vercel or Netlify
 ```
