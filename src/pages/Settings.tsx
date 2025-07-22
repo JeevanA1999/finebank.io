@@ -19,9 +19,9 @@ export default function Settings() {
   const fileInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
-    fullName: 'Tanzir Rahman',
-    email: 'tanzir.rahman@email.com',
-    username: 'tanzir.rahman',
+    fullName: 'John David',
+    email: 'John.david@email.com',
+    username: 'John.David',
     phone: '+880 | 51547 58686',
     oldPassword: '',
     newPassword: '',
