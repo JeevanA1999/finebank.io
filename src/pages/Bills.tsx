@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -11,6 +12,12 @@ import {
   TableHead,
   Avatar,
   useTheme,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { Breadcrumbs, Link } from '@mui/material';
@@ -26,7 +33,7 @@ const generatePastDate = (
   return { day, month };
 };
 
-const bills = [
+const initialBills = [
   {
     ...generatePastDate(0),
     name: 'Figma',
@@ -69,6 +76,37 @@ const bills = [
 
 export default function Bills() {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [bills, setBills] = useState(initialBills);
+  const [form, setForm] = useState({
+    name: '',
+    type: '',
+    description: '',
+    logo: '',
+    lastCharge: '',
+    amount: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    const newBill = {
+      ...generatePastDate(0),
+      ...form,
+    };
+    setBills([newBill, ...bills]); // Add to top
+    setForm({
+      name: '',
+      type: '',
+      description: '',
+      logo: '',
+      lastCharge: '',
+      amount: '',
+    });
+    setOpen(false);
+  };
 
   return (
     <>
@@ -79,16 +117,26 @@ export default function Bills() {
         maxWidth="xl"
         sx={{ py: 1, px: 1.5, maxWidth: { xs: '380px', sm: '100%' } }}
       >
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" color="inherit" component={RouterLink} to="/">
-            Dashboard
-          </Link>
-          <Typography variant="h6" fontWeight={600} color="#878787">
-            Bills
-          </Typography>
-        </Breadcrumbs>
+        <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} mb={2}>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" component={RouterLink} to="/">
+              Dashboard
+            </Link>
+            <Typography variant="h6" fontWeight={600} color="#878787">
+              Bills
+            </Typography>
+          </Breadcrumbs>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ width: '120px', height: '48px', borderRadius: '6px' }}
+            onClick={() => setOpen(true)}
+          >
+            + Add Bills
+          </Button>
+        </Box>
 
-        {/* <Grid container spacing={2} mt={2}> */}
+        {/* Bills Table */}
         <Grid item xs={12} borderRadius={1} mt={2}>
           <Box
             overflow="auto"
@@ -123,7 +171,6 @@ export default function Bills() {
                 <TableBody>
                   {bills.map((bill, idx) => (
                     <TableRow key={idx}>
-                      {/* Due Date */}
                       <TableCell>
                         <Box
                           display="flex"
@@ -144,7 +191,6 @@ export default function Bills() {
                         </Box>
                       </TableCell>
 
-                      {/* Logo */}
                       <TableCell sx={{ width: '140px', height: '40px' }}>
                         <Box
                           component="img"
@@ -158,7 +204,6 @@ export default function Bills() {
                         />
                       </TableCell>
 
-                      {/* Item Description */}
                       <TableCell>
                         <Typography fontWeight={700} fontSize="14px">
                           {bill.type}
@@ -168,14 +213,12 @@ export default function Bills() {
                         </Typography>
                       </TableCell>
 
-                      {/* Last Charge */}
                       <TableCell>
                         <Typography fontSize="14px" color="text.secondary">
                           {bill.lastCharge}
                         </Typography>
                       </TableCell>
 
-                      {/* Amount */}
                       <TableCell align="right">
                         <Box
                           px={2}
@@ -196,8 +239,34 @@ export default function Bills() {
             </TableContainer>
           </Box>
         </Grid>
-        {/* </Grid> */}
       </Container>
+
+      {/* Dialog for Adding Bills */}
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Add New Bill</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 2 }}>
+          <TextField label="Name" name="name" value={form.name} onChange={handleChange} fullWidth />
+          <TextField label="Type" name="type" value={form.type} onChange={handleChange} fullWidth />
+          <TextField
+            label="Description"
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            fullWidth
+            multiline
+            rows={2}
+          />
+          <TextField label="Logo URL" name="logo" value={form.logo} onChange={handleChange} fullWidth />
+          <TextField label="Last Charge (e.g., 01 Aug, 2025)" name="lastCharge" value={form.lastCharge} onChange={handleChange} fullWidth />
+          <TextField label="Amount (e.g., $99)" name="amount" value={form.amount} onChange={handleChange} fullWidth />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleSubmit} variant="contained" color="primary" sx={{ width: '120px', height: '48px', borderRadius: '6px' }}>
+            Add Bill
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
