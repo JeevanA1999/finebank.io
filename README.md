@@ -39,7 +39,7 @@ Finebank.io is a **responsive**, **feature-rich** banking dashboard built using 
 | Routing          | React Router v7            |
 | State Management | React Hooks                |
 | Build Tools      | Vite, TypeScript           |
-| Deployment       | Vercel / Netlify           |
+| Deployment       | Vercel          |
 
 ---
 
