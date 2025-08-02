@@ -291,7 +291,7 @@ export default function Navbar({ onClose }: { onClose?: () => void }) {
               sx={{ width: 24, height: 24 }}
               alt="John"
             />
-            <Box>
+            <Box sx={{cursor: 'pointer'}} onClick={() => navigate('/settings')}>
               <Typography fontSize={12} color="white" fontWeight={500}>
                 John David
               </Typography>
