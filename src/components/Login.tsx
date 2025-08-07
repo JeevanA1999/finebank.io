@@ -23,8 +23,8 @@ import CustomButton from '../common/Button.tsx';
 import google from '../assets/google.png';
 import { Link as RouterLink } from 'react-router-dom';
 export default function Login() {
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('demoUser@gmail.com');
+const [password, setPassword] = useState('demoUser@12');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const navigate = useNavigate();
